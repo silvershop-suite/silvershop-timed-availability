@@ -1,0 +1,64 @@
+{
+    "name": "silvershop-suite/timed-availability",
+    "description": "Timed availability for SilverShop (SilverStripe CMS 6): an on-sale window (from/until) plus a manual always/never override on any product or category, so seasonal lines (Sinterklaas, Pasen, Moederdag, Vaderdag, Kerst) switch themselves on and off by date and can be forced instantly.",
+    "type": "silverstripe-vendormodule",
+    "keywords": ["silverstripe", "silvershop", "ecommerce", "seasonal", "availability", "scheduling", "timed", "on-sale"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Remy Vaartjes",
+            "email": "remy@xd.nl",
+            "role": "Lead developer"
+        },
+        {
+            "name": "SilverShop-Suite Contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "silverstripe/framework": "^6.0",
+        "silverstripe/cms": "^6.0",
+        "silvershop/core": "^6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.3",
+        "squizlabs/php_codesniffer": "^3.7",
+        "cambis/silverstan": "^2.1",
+        "silverstripe/sqlite3": "^4"
+    },
+    "suggest": {
+        "silvershop-suite/storefront": "Hides an out-of-season category from the storefront navigation and surfaces the on-sale state on the product card / PDP.",
+        "silvershop-suite/card-cache": "The product-card cache folds the live availability into its fingerprint, so a cached card refreshes when the window opens or closes."
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "stan": "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=-1",
+        "lint": "vendor/bin/phpcs",
+        "lint:fix": "vendor/bin/phpcbf"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "silverstripe/recipe-plugin": true,
+            "silverstripe/vendor-plugin": true,
+            "php-http/discovery": false
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SilverShop\\TimedAvailability\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SilverShop\\TimedAvailability\\Tests\\": "tests/php/"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

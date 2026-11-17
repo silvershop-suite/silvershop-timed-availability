@@ -1,0 +1,18 @@
+en:
+  SilverShop\TimedAvailability\TimedAvailabilityExtension:
+    TAB: 'Availability'
+    MODE: 'On sale'
+    MODE_AUTO: 'Automatic — use the dates below'
+    MODE_ON: 'Always on sale — ignore the dates'
+    MODE_OFF: 'Never on sale — ignore the dates'
+    MODE_DESC: 'Automatic follows the window below. Use Always/Never to force it on or off instantly without touching the dates.'
+    FROM: 'On sale from'
+    FROM_DESC: 'Leave empty for no start limit. The exact moment it goes on sale.'
+    UNTIL: 'On sale until'
+    UNTIL_DESC: 'Leave empty for no end limit. The exact moment it leaves sale — a date with no time means 00:00, the start of that day. On a category, a product with no dates of its own inherits this window.'
+    SEO: 'When out of season'
+    SEO_DEFAULT: 'Use the site default'
+    SEO_SHOWN: 'Shown — page stays visible ("Sold out"), still in Google'
+    SEO_NOINDEX: 'No-index — page stays visible, hidden from Google + sitemap'
+    SEO_HIDDEN: 'Hidden — page returns 404, invisible to visitors + Google'
+    SEO_DESC: 'Only applies while out of season. "Hidden" entirely removes the page from the shop and search engines (the sitemap and search follow it automatically). The CMS stays editable year-round.'

@@ -1,0 +1,18 @@
+nl:
+  SilverShop\TimedAvailability\TimedAvailabilityExtension:
+    TAB: 'Beschikbaarheid'
+    MODE: 'Te koop'
+    MODE_AUTO: 'Automatisch — gebruik de data hieronder'
+    MODE_ON: 'Altijd te koop — negeer de data'
+    MODE_OFF: 'Nooit te koop — negeer de data'
+    MODE_DESC: 'Automatisch volgt de periode hieronder. Gebruik Altijd/Nooit om het direct aan of uit te zetten zonder de data aan te passen.'
+    FROM: 'Te koop vanaf'
+    FROM_DESC: 'Laat leeg voor geen startdatum. Het exacte moment waarop het in de verkoop gaat.'
+    UNTIL: 'Te koop tot'
+    UNTIL_DESC: 'Laat leeg voor geen einddatum. Het exacte moment waarop het uit de verkoop gaat — een datum zonder tijd betekent 00:00, het begin van die dag. Op een categorie erft een product zonder eigen data deze periode.'
+    SEO: 'Buiten het seizoen'
+    SEO_DEFAULT: 'Gebruik de site-standaard'
+    SEO_SHOWN: 'Zichtbaar — pagina blijft zichtbaar ("Uitverkocht"), blijft in Google'
+    SEO_NOINDEX: 'No-index — pagina blijft zichtbaar, verborgen voor Google + sitemap'
+    SEO_HIDDEN: 'Verborgen — pagina geeft 404, onzichtbaar voor bezoekers + Google'
+    SEO_DESC: 'Geldt alleen buiten het seizoen. "Verborgen" haalt de pagina volledig uit de winkel en zoekmachines (sitemap en zoeken volgen automatisch). De CMS blijft het hele jaar bewerkbaar.'

@@ -1,0 +1,27 @@
+---
+Name: silvershop-timed-availability
+After:
+  - '#silvershop'
+  # Run our extension after category-index so that when it supplies the product list up front via
+  # overrideProductsShowable, our filter sees the populated list (core returns an override immediately,
+  # skipping the later updateProductsShowable hook). No-op when category-index is absent.
+  - 'silvershop-category-index'
+  # ...and after silvershop-seo, so our out-of-season `noindex` override of the robots MetaComponent wins
+  # (same key, no duplicate tag). No-op when silvershop-seo is absent.
+  - 'silvershop-seo'
+---
+# On-sale window (AvailableFrom / AvailableUntil) + an always/never override on products and categories.
+# Out of season an item is not purchasable (canPurchase veto) and is dropped from category listings
+# (updateProductsShowable). The gate is front-of-shop only — the CMS stays editable year-round.
+SilverShop\Page\Product:
+  extensions:
+    - SilverShop\TimedAvailability\TimedAvailabilityExtension
+
+SilverShop\Page\ProductCategory:
+  extensions:
+    - SilverShop\TimedAvailability\TimedAvailabilityExtension
+
+# Site-wide default for an out-of-season item: shown (default) | noindex | hidden. Per-record overridable
+# via the "When out of season" dropdown (which defaults to this).
+SilverShop\TimedAvailability\TimedAvailabilityExtension:
+  out_of_season: 'shown'
