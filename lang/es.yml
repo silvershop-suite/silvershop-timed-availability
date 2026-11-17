@@ -1,0 +1,18 @@
+es:
+  SilverShop\TimedAvailability\TimedAvailabilityExtension:
+    TAB: 'Disponibilidad'
+    MODE: 'A la venta'
+    MODE_AUTO: 'Automático — usar las fechas de abajo'
+    MODE_ON: 'Siempre a la venta — ignorar las fechas'
+    MODE_OFF: 'Nunca a la venta — ignorar las fechas'
+    MODE_DESC: 'Automático sigue el periodo de abajo. Usa Siempre/Nunca para activarlo o desactivarlo al instante sin tocar las fechas.'
+    FROM: 'A la venta desde'
+    FROM_DESC: 'Dejar vacío para no tener límite de inicio. El momento exacto en que sale a la venta.'
+    UNTIL: 'A la venta hasta'
+    UNTIL_DESC: 'Dejar vacío para no tener límite de fin. El momento exacto en que deja de estar a la venta — una fecha sin hora significa las 00:00, el inicio de ese día. En una categoría, un producto sin fechas propias hereda este periodo.'
+    SEO: 'Fuera de temporada'
+    SEO_DEFAULT: 'Usar el valor predeterminado del sitio'
+    SEO_SHOWN: 'Visible — la página sigue visible ("Agotado"), sigue en Google'
+    SEO_NOINDEX: 'No-index — la página sigue visible, oculta de Google + sitemap'
+    SEO_HIDDEN: 'Oculta — la página devuelve 404, invisible para visitantes + Google'
+    SEO_DESC: 'Solo se aplica fuera de temporada. "Oculta" elimina por completo la página de la tienda y de los motores de búsqueda (el sitemap y la búsqueda lo siguen automáticamente). El CMS permanece editable todo el año.'

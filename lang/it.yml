@@ -1,0 +1,18 @@
+it:
+  SilverShop\TimedAvailability\TimedAvailabilityExtension:
+    TAB: 'Disponibilità'
+    MODE: 'In vendita'
+    MODE_AUTO: 'Automatico — usa le date qui sotto'
+    MODE_ON: 'Sempre in vendita — ignora le date'
+    MODE_OFF: 'Mai in vendita — ignora le date'
+    MODE_DESC: 'Automatico segue il periodo qui sotto. Usa Sempre/Mai per attivarlo o disattivarlo immediatamente senza toccare le date.'
+    FROM: 'In vendita dal'
+    FROM_DESC: 'Lasciare vuoto per nessun limite di inizio. Il momento esatto in cui va in vendita.'
+    UNTIL: 'In vendita fino al'
+    UNTIL_DESC: 'Lasciare vuoto per nessun limite di fine. Il momento esatto in cui esce dalla vendita — una data senza orario indica le 00:00, l''inizio di quel giorno. Su una categoria, un prodotto senza date proprie eredita questo periodo.'
+    SEO: 'Fuori stagione'
+    SEO_DEFAULT: 'Usa l''impostazione predefinita del sito'
+    SEO_SHOWN: 'Visibile — la pagina resta visibile ("Esaurito"), resta su Google'
+    SEO_NOINDEX: 'No-index — la pagina resta visibile, nascosta da Google + sitemap'
+    SEO_HIDDEN: 'Nascosta — la pagina restituisce 404, invisibile ai visitatori + Google'
+    SEO_DESC: 'Si applica solo fuori stagione. "Nascosta" rimuove completamente la pagina dal negozio e dai motori di ricerca (sitemap e ricerca seguono automaticamente). Il CMS resta modificabile tutto l''anno.'

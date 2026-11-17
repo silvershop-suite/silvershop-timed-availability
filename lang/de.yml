@@ -1,0 +1,18 @@
+de:
+  SilverShop\TimedAvailability\TimedAvailabilityExtension:
+    TAB: 'Verfügbarkeit'
+    MODE: 'Im Verkauf'
+    MODE_AUTO: 'Automatisch — die Daten unten verwenden'
+    MODE_ON: 'Immer im Verkauf — Daten ignorieren'
+    MODE_OFF: 'Nie im Verkauf — Daten ignorieren'
+    MODE_DESC: 'Automatisch folgt dem Zeitraum unten. Mit Immer/Nie sofort ein- oder ausschalten, ohne die Daten zu ändern.'
+    FROM: 'Im Verkauf ab'
+    FROM_DESC: 'Leer lassen für keine Startgrenze. Der genaue Zeitpunkt, ab dem es in den Verkauf geht.'
+    UNTIL: 'Im Verkauf bis'
+    UNTIL_DESC: 'Leer lassen für keine Endgrenze. Der genaue Zeitpunkt, an dem es aus dem Verkauf geht — ein Datum ohne Uhrzeit bedeutet 00:00 Uhr, der Beginn dieses Tages. Bei einer Kategorie erbt ein Produkt ohne eigene Daten diesen Zeitraum.'
+    SEO: 'Außerhalb der Saison'
+    SEO_DEFAULT: 'Standardeinstellung der Website verwenden'
+    SEO_SHOWN: 'Sichtbar — Seite bleibt sichtbar ("Ausverkauft"), weiterhin bei Google'
+    SEO_NOINDEX: 'No-Index — Seite bleibt sichtbar, verborgen vor Google + Sitemap'
+    SEO_HIDDEN: 'Verborgen — Seite gibt 404 zurück, unsichtbar für Besucher + Google'
+    SEO_DESC: 'Gilt nur außerhalb der Saison. "Verborgen" entfernt die Seite vollständig aus dem Shop und aus Suchmaschinen (Sitemap und Suche folgen automatisch). Das CMS bleibt ganzjährig bearbeitbar.'

@@ -55,7 +55,14 @@ Examples for a chocolate shop:
   is never hidden by it.
 - With `silvershop-suite/card-cache`, the live availability is folded into the product-card cache fingerprint.
 
+## Translations
+
+Ships with English, Dutch, German, Spanish, French and Italian (`lang/*.yml`).
+
+## License
+
+BSD-3-Clause. Copyright (c) 2026 Remy Vaartjes.
+
 ## Credits
 
 Developed by [Remy Vaartjes](https://github.com/RVXD) and the SilverShop-Suite Contributors.
-BSD-3-Clause.
