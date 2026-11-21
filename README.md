@@ -2,7 +2,7 @@
 
 Put a product or a whole category **on sale for a period only**, and switch it on or off at will.
 
-Built for seasonal ranges: Sinterklaas, Pasen, Moederdag, Vaderdag, Kerst, Valentijn. Set the dates once per
+Built for seasonal ranges: Christmas, Easter, Mother's Day, Father's Day, Valentine's Day, Black Friday. Set the dates once per
 season (you edit them each year by taste and planning), or flip a single toggle to force it on or off right now.
 
 - **On-sale window** — `AvailableFrom` / `AvailableUntil` (either bound optional) on a `Product` **and** a
@@ -10,7 +10,7 @@ season (you edit them each year by taste and planning), or flip a single toggle 
 - **Instant override** — `Always on sale` / `Never on sale` ignores the dates, for opening early, extending a
   strong season, or pulling something immediately.
 - **Inheritance** — a product with no dates of its own inherits its parent category's window, so you set the
-  dates once on the "Sinterklaas" category and leave the products blank.
+  dates once on the "Christmas" category and leave the products blank.
 - **Out of season** the item is **not purchasable** and is **dropped from category listings**. The CMS stays
   fully editable year-round — the gate is front-of-shop only.
 
@@ -39,11 +39,11 @@ Open a product or category in the CMS → the **Availability** tab:
 | **On sale from** | Optional start. Empty = no start limit. |
 | **On sale until** | Optional end. Empty = no end limit. A date with no time means `00:00` — the start of that day. |
 
-Examples for a chocolate shop:
+Examples for a seasonal range:
 
-- **Sinterklaas category** — on the category set *from* `15 Nov` *until* `6 Dec 00:00`; leave the chocolate
-  letters inside it blank. The whole range appears mid-November and closes on Sinterklaas.
-- **A single Paasei** in a year-round "Bonbons" category — set the window on just that product.
+- **Christmas category** — on the category set *from* `15 Nov` *until* `25 Dec 00:00`; leave the products
+  inside it blank. The whole range appears mid-November and closes on Christmas Day.
+- **A single Easter item** in a year-round category — set the window on just that product.
 - **Open a day early** — flip the category to `Always on sale` for the day, then back to `Automatic`.
 
 ### Behaviour

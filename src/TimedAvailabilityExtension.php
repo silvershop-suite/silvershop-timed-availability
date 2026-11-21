@@ -28,7 +28,7 @@ use SilverStripe\Security\Permission;
  *  - `ForceOff`: never available, ignoring the dates (pull something immediately).
  *
  * A Product on `Auto` with no window of its own inherits its immediate parent category's window, so you can set the
- * dates once on the "Sinterklaas" category and leave the products blank. Both dates empty + `Auto` with no seasonal
+ * dates once on the "Christmas" category and leave the products blank. Both dates empty + `Auto` with no seasonal
  * parent = always available, so the extension is a no-op on an ordinary product.
  *
  * @extends Extension<\SilverShop\Page\Product|ProductCategory>

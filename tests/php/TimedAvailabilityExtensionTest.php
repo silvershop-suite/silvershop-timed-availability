@@ -19,7 +19,7 @@ class TimedAvailabilityExtensionTest extends SapphireTest
     {
         parent::setUp();
         Config::modify()->set(Product::class, 'global_allow_purchase', true);
-        // Freeze "now" so the windows are deterministic (1 December, Sinterklaas week).
+        // Freeze "now" so the windows are deterministic (1 December, in the Christmas season).
         DBDatetime::set_mock_now('2026-12-01 12:00:00');
     }
 
@@ -100,7 +100,7 @@ class TimedAvailabilityExtensionTest extends SapphireTest
     public function testBlankProductInheritsParentCategoryWindow(): void
     {
         $category = ProductCategory::create();
-        $category->Title = 'Sinterklaas';
+        $category->Title = 'Christmas';
         $category->AvailableUntil = '2026-11-30 23:59:59'; // closed as of mock-now (1 December)
         $category->write();
         $category->publishSingle();
@@ -127,7 +127,7 @@ class TimedAvailabilityExtensionTest extends SapphireTest
             'AvailableUntil' => '2026-12-31 23:59:59',
         ]);
         $this->makeProduct([
-            'Title' => 'Paasei',
+            'Title' => 'Easter Egg',
             'ParentID' => $category->ID,
             'AvailableUntil' => '2026-04-30 23:59:59',
         ]);
@@ -139,7 +139,7 @@ class TimedAvailabilityExtensionTest extends SapphireTest
 
         $showable = $category->ProductsShowable()->column('Title');
         $this->assertContains('Kerstkransje', $showable);
-        $this->assertNotContains('Paasei', $showable);
+        $this->assertNotContains('Easter Egg', $showable);
         $this->assertNotContains('Verborgen', $showable);
     }
 
