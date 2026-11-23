@@ -10,6 +10,7 @@ use SilverShop\TimedAvailability\TimedAvailabilityExtension;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Versioned\Versioned;
 
 class TimedAvailabilityExtensionTest extends SapphireTest
 {
@@ -141,6 +142,76 @@ class TimedAvailabilityExtensionTest extends SapphireTest
         $this->assertContains('Kerstkransje', $showable);
         $this->assertNotContains('Easter Egg', $showable);
         $this->assertNotContains('Verborgen', $showable);
+    }
+
+    /**
+     * A product with no dates of its own under a closed category is out of season on its own page (it inherits the
+     * window), so it must not be listed either: not in the closed category, and not in an open ancestor category that
+     * lists its subcategories' products. Own dates and ForceOn still win, and open categories are untouched.
+     */
+    public function testBlankProductUnderClosedCategoryIsNotListed(): void
+    {
+        $shop = $this->makeCategory('Shop');
+        $christmas = $this->makeCategory('Christmas', $shop->ID, ['AvailableUntil' => '2026-11-30 23:59:59']);
+        $comingSoon = $this->makeCategory('Coming soon', $shop->ID, ['AvailableFrom' => '2026-12-24 00:00:00']);
+        $pulled = $this->makeCategory('Pulled', $shop->ID, ['AvailabilityMode' => 'ForceOff']);
+        $summer = $this->makeCategory('Summer', $shop->ID, ['AvailableUntil' => '2026-12-31 23:59:59']);
+
+        $this->makeProduct(['Title' => 'Bauble', 'ParentID' => $christmas->ID]);
+        $this->makeProduct(['Title' => 'Advent calendar', 'ParentID' => $comingSoon->ID]);
+        $this->makeProduct(['Title' => 'Recalled bar', 'ParentID' => $pulled->ID]);
+        $this->makeProduct([
+            'Title' => 'Own window',
+            'ParentID' => $christmas->ID,
+            'AvailableUntil' => '2026-12-31 23:59:59',
+        ]);
+        $this->makeProduct(['Title' => 'Forced on', 'ParentID' => $christmas->ID, 'AvailabilityMode' => 'ForceOn']);
+        $this->makeProduct(['Title' => 'Sunscreen', 'ParentID' => $summer->ID]);
+
+        foreach ([Versioned::DRAFT, Versioned::LIVE] as $stage) {
+            Versioned::withVersionedMode(function () use ($stage, $shop, $christmas): void {
+                Versioned::set_stage($stage);
+
+                $listed = $shop->ProductsShowable()->column('Title');
+                sort($listed);
+                $this->assertSame(['Forced on', 'Own window', 'Sunscreen'], $listed, "ancestor listing ({$stage})");
+
+                $inCategory = $christmas->ProductsShowable()->column('Title');
+                sort($inCategory);
+                $this->assertSame(['Forced on', 'Own window'], $inCategory, "closed category listing ({$stage})");
+            });
+        }
+
+        // the listing agrees with the product pages
+        foreach (Product::get() as $product) {
+            $this->assertSame(
+                in_array($product->Title, ['Forced on', 'Own window', 'Sunscreen'], true),
+                $product->IsAvailableNow(),
+                $product->Title
+            );
+        }
+
+        // the category-index override path gets the same treatment
+        $override = Product::get();
+        $recursive = true;
+        $shop->extend('overrideProductsShowable', $override, $recursive);
+        $this->assertNotContains('Bauble', $override->column('Title'));
+        $this->assertContains('Sunscreen', $override->column('Title'));
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function makeCategory(string $title, int $parentId = 0, array $data = []): ProductCategory
+    {
+        $category = ProductCategory::create();
+        $category->Title = $title;
+        $category->ParentID = $parentId;
+        $category->update($data);
+        $category->write();
+        $category->publishSingle();
+
+        return $category;
     }
 
     public function testOverrideProductsShowableIsFiltered(): void

@@ -11,6 +11,7 @@ use SilverStripe\Forms\DatetimeField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DB;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
@@ -240,6 +241,10 @@ class TimedAvailabilityExtension extends Extension
      * {@see self::IsAvailableNow()}: `ForceOn` always in; `ForceOff` always out; anything else (`Auto`, or an
      * unset/empty mode) follows the window (either bound optional). Treating "not ForceOff" as the window branch
      * keeps it correct even when the Enum default was never written to the row.
+     *
+     * A product with no window of its own inherits its parent category's window, so it is also dropped while that
+     * category is out of season (one level, as in IsAvailableNow). Otherwise such a product would still be listed
+     * in an open ancestor category's ProductsShowable() while its own page says it's out of season.
      */
     private function applyAvailabilityFilter(DataList &$products): void
     {
@@ -254,6 +259,45 @@ class TimedAvailabilityExtension extends Extension
             . ')'
             . ')' => ['ForceOn', 'ForceOff', $now, $now],
         ]);
+
+        $closedCategoryIds = $this->closedCategoryIds($now);
+        if ($closedCategoryIds === []) {
+            return;
+        }
+
+        // Blank Auto product whose parent is a closed category: inherits that window, so out of season too.
+        // "SiteTree" is the base-table alias in both stages (the live table is aliased back to it).
+        $products = $products->where([
+            'NOT ('
+            . '("SilverShop_Product"."AvailabilityMode" IS NULL'
+            . ' OR "SilverShop_Product"."AvailabilityMode" NOT IN (?, ?))'
+            . ' AND "SilverShop_Product"."AvailableFrom" IS NULL'
+            . ' AND "SilverShop_Product"."AvailableUntil" IS NULL'
+            . ' AND "SiteTree"."ParentID" IN (' . DB::placeholders($closedCategoryIds) . ')'
+            . ')' => array_merge(['ForceOn', 'ForceOff'], $closedCategoryIds),
+        ]);
+    }
+
+    /**
+     * IDs of the categories that are out of season right now (same rules as IsAvailableNow on a category, which
+     * never inherits): `ForceOff`, or not `ForceOn` with a window that hasn't opened yet or has already closed.
+     * Read in the current stage, like the product list it filters.
+     *
+     * @return array<int, int>
+     */
+    private function closedCategoryIds(string $now): array
+    {
+        $ids = ProductCategory::get()->where([
+            '("SilverShop_ProductCategory"."AvailabilityMode" = ?'
+            . ' OR ('
+            . '("SilverShop_ProductCategory"."AvailabilityMode" IS NULL'
+            . ' OR "SilverShop_ProductCategory"."AvailabilityMode" != ?)'
+            . ' AND ("SilverShop_ProductCategory"."AvailableFrom" > ?'
+            . ' OR "SilverShop_ProductCategory"."AvailableUntil" < ?)'
+            . '))' => ['ForceOff', 'ForceOn', $now, $now],
+        ])->column('ID');
+
+        return array_map('intval', $ids);
     }
 
     /**
